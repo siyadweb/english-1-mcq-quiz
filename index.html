@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#243b64">
+<title>English I – 40 MCQ Quiz</title>
+<style>
+:root{--blue:#243b64;--blue2:#172a4b;--bg:#f3f6fb;--ink:#18243a;--muted:#64748b;--green:#d9f7e5;--green-border:#16834a;--red:#ffe1e1;--red-border:#d92d20;--line:#dce3ed}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.55}
+.container{max-width:900px;margin:0 auto;padding:20px 16px 48px}
+header{background:var(--blue);color:#fff;padding:26px 24px;border-radius:18px;margin:8px 0 18px}
+h1{font-size:clamp(25px,5vw,36px);line-height:1.2;margin:0 0 10px}
+.subtitle{margin:0;color:#e8eef8;font-size:16px}
+.topline{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin:16px 0}
+.progress-wrap{flex:1;min-width:180px;background:#dce3ed;height:10px;border-radius:20px;overflow:hidden}
+#progress{height:100%;width:0;background:#16834a;transition:width .2s}
+.stat{font-weight:700;color:var(--blue);font-size:14px}
+button{font:inherit;cursor:pointer}
+.reset{background:var(--blue);color:#fff;border:0;border-radius:10px;padding:12px 18px;font-weight:700}
+.reset:hover{background:var(--blue2)}
+.question{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;margin:14px 0;box-shadow:0 2px 7px rgba(25,45,75,.04)}
+.question h2{font-size:17px;line-height:1.45;margin:0 0 13px}
+.qnum{color:var(--blue);font-weight:800;margin-right:5px}
+.option{display:flex;gap:10px;align-items:flex-start;text-align:left;width:100%;border:1px solid var(--line);border-radius:10px;background:#fff;padding:12px 13px;margin:8px 0;color:var(--ink);line-height:1.4}
+.option:hover:not(:disabled){background:#eef4ff;border-color:#9fb7e4}
+.option .letter{font-weight:800;min-width:22px}
+.option.correct{background:var(--green)!important;border-color:var(--green-border);color:#14532d}
+.option.wrong{background:var(--red)!important;border-color:var(--red-border);color:#7f1d1d}
+.option:disabled{cursor:default;opacity:1}
+.feedback{font-weight:700;margin:10px 0 0;min-height:22px;font-size:14px}
+.feedback.good{color:#167344}.feedback.bad{color:#b42318}
+#result{display:none;background:#fff;border:2px solid var(--blue);border-radius:16px;padding:22px;margin:20px 0;text-align:center}
+#result h2{margin:0 0 8px}
+#finalScore{font-size:30px;font-weight:800;color:var(--blue)}
+footer{text-align:center;color:var(--muted);font-size:13px;margin-top:28px}
+@media(min-width:650px){.container{padding-top:28px}.question{padding:22px}.option{padding:13px 15px}}
+</style>
+</head>
+<body>
+<main class="container">
+<header>
+<h1>English I – 40 MCQ Quiz</h1>
+<p class="subtitle">Choose the correct answer. Correct answers turn green and wrong answers turn red. Your score updates as you answer.</p>
+</header>
+<div class="topline">
+<div class="stat" id="progressText">Answered 0 of 40</div>
+<div class="progress-wrap" aria-label="Quiz progress"><div id="progress"></div></div>
+<div class="stat" id="scoreText">Score: 0 / 40</div>
+<button class="reset" id="resetBtn" type="button">Reset Quiz</button>
+</div>
+<div id="quiz"></div>
+<section id="result" aria-live="polite">
+<h2>Quiz completed!</h2>
+<div id="finalScore"></div>
+<p id="finalMessage"></p>
+<button class="reset" type="button" id="playAgain">Try Again</button>
+</section>
+<footer>English I Question Bank · 40 Multiple-Choice Questions</footer>
+</main>
+<script>
+const questions = [{"number": 1, "question": "Which expression is commonly used to introduce another person?", "options": [{"letter": "A", "text": "Meet my friend, Anu."}, {"letter": "B", "text": "Who is she?"}, {"letter": "C", "text": "Tell me about Anu."}, {"letter": "D", "text": "Anu is there."}], "answer": "A"}, {"number": 2, "question": "Which behaviour should be avoided during a group discussion?", "options": [{"letter": "A", "text": "Maintaining eye contact"}, {"letter": "B", "text": "Listening to others"}, {"letter": "C", "text": "Interrupting repeatedly"}, {"letter": "D", "text": "Supporting an opinion with reasons"}], "answer": "C"}, {"number": 3, "question": "On which occasion did Malala deliver her speech at the United Nations?", "options": [{"letter": "A", "text": "Her 15th birthday"}, {"letter": "B", "text": "Her 16th birthday"}, {"letter": "C", "text": "Her 17th birthday"}, {"letter": "D", "text": "International Women's Day"}], "answer": "B"}, {"number": 4, "question": "What should be the focus of efforts to improve the lives of children, according to Malala?", "options": [{"letter": "A", "text": "Providing weapons"}, {"letter": "B", "text": "Providing education"}, {"letter": "C", "text": "Increasing political power"}, {"letter": "D", "text": "Building more industries"}], "answer": "B"}, {"number": 5, "question": "Which reading technique helps locate a specific date, name, or number?", "options": [{"letter": "A", "text": "Skimming"}, {"letter": "B", "text": "Scanning"}, {"letter": "C", "text": "Intensive reading"}, {"letter": "D", "text": "Critical reading"}], "answer": "B"}, {"number": 6, "question": "According to Steve Jobs, how can people make sense of their experiences?", "options": [{"letter": "A", "text": "Avoiding failure"}, {"letter": "B", "text": "Connecting the dots looking backward"}, {"letter": "C", "text": "Following others"}, {"letter": "D", "text": "Depending entirely on luck"}], "answer": "B"}, {"number": 7, "question": "What message does Steve Jobs convey through his discussion of being fired from Apple?", "options": [{"letter": "A", "text": "Failure can lead to new opportunities"}, {"letter": "B", "text": "Success requires avoiding risks"}, {"letter": "C", "text": "Education is unnecessary"}, {"letter": "D", "text": "Business success is guaranteed"}], "answer": "A"}, {"number": 8, "question": "What does the title The Sky Is the Limit suggest?", "options": [{"letter": "A", "text": "Human achievements have no fixed limits"}, {"letter": "B", "text": "Space travel is impossible"}, {"letter": "C", "text": "Dreams should remain practical"}, {"letter": "D", "text": "Success depends only on wealth"}], "answer": "A"}, {"number": 9, "question": "In An Astrologer's Day, what does the astrologer discover about Guru Nayak?", "options": [{"letter": "A", "text": "He is a wealthy man"}, {"letter": "B", "text": "He is the man whom the astrologer once attacked"}, {"letter": "C", "text": "He is a police officer"}, {"letter": "D", "text": "He is the astrologer's brother"}], "answer": "B"}, {"number": 10, "question": "What is the main element of surprise in The Open Window?", "options": [{"letter": "A", "text": "Vera invented the story about the open window"}, {"letter": "B", "text": "Framton meets an old friend"}, {"letter": "C", "text": "Mrs. Sappleton leaves the house"}, {"letter": "D", "text": "Vera becomes frightened"}], "answer": "A"}, {"number": 11, "question": "What is the most appropriate formal self-introduction?", "options": [{"letter": "A", "text": "Hey, I'm Rahul."}, {"letter": "B", "text": "Hi buddy, Rahul here."}, {"letter": "C", "text": "Good morning. My name is Rahul Kumar."}, {"letter": "D", "text": "What's up? I'm Rahul."}], "answer": "C"}, {"number": 12, "question": "What is an important quality of a good group-discussion participant?", "options": [{"letter": "A", "text": "Interrupting others"}, {"letter": "B", "text": "Listening actively"}, {"letter": "C", "text": "Dominating the discussion"}, {"letter": "D", "text": "Avoiding the discussion"}], "answer": "B"}, {"number": 13, "question": "What is the central message of Malala Yousafzai's UN speech?", "options": [{"letter": "A", "text": "Political power"}, {"letter": "B", "text": "Education and equal rights"}, {"letter": "C", "text": "Economic development"}, {"letter": "D", "text": "International travel"}], "answer": "B"}, {"number": 14, "question": "What does Malala identify as a powerful tool for bringing change?", "options": [{"letter": "A", "text": "Weapons"}, {"letter": "B", "text": "Money"}, {"letter": "C", "text": "Education"}, {"letter": "D", "text": "Technology"}], "answer": "C"}, {"number": 15, "question": "What is the primary purpose of skimming?", "options": [{"letter": "A", "text": "Understand every detail"}, {"letter": "B", "text": "Identify the main idea quickly"}, {"letter": "C", "text": "Memorize the text"}, {"letter": "D", "text": "Find grammatical errors"}], "answer": "B"}, {"number": 16, "question": "Which salutation is most appropriate for a formal letter?", "options": [{"letter": "A", "text": "Hey buddy"}, {"letter": "B", "text": "Hi there"}, {"letter": "C", "text": "Dear Sir/Madam"}, {"letter": "D", "text": "What's up?"}], "answer": "C"}, {"number": 17, "question": "In The Road Not Taken, what do the two roads symbolize?", "options": [{"letter": "A", "text": "Two countries"}, {"letter": "B", "text": "Choices and alternative paths in life"}, {"letter": "C", "text": "Success and failure in education"}, {"letter": "D", "text": "Nature and civilization"}], "answer": "B"}, {"number": 18, "question": "What central issue does Shashi face in English Vinglish?", "options": [{"letter": "A", "text": "Financial difficulties"}, {"letter": "B", "text": "Lack of confidence due to limited English proficiency"}, {"letter": "C", "text": "Difficulty finding employment"}, {"letter": "D", "text": "Conflict with her parents"}], "answer": "B"}, {"number": 19, "question": "How does learning English affect Shashi?", "options": [{"letter": "A", "text": "Makes her dependent"}, {"letter": "B", "text": "Increases her confidence and self-worth"}, {"letter": "C", "text": "Makes her abandon her family"}, {"letter": "D", "text": "Prevents her from making friends"}], "answer": "B"}, {"number": 20, "question": "Which theme is strongly represented in English Vinglish?", "options": [{"letter": "A", "text": "Self-respect and personal empowerment"}, {"letter": "B", "text": "Political conflict"}, {"letter": "C", "text": "Environmental destruction"}, {"letter": "D", "text": "Historical warfare"}], "answer": "A"}, {"number": 21, "question": "Who delivered the famous Stanford Commencement Speech discussed in the syllabus?", "options": [{"letter": "A", "text": "Bill Gates"}, {"letter": "B", "text": "Steve Jobs"}, {"letter": "C", "text": "Barack Obama"}, {"letter": "D", "text": "Mark Zuckerberg"}], "answer": "B"}, {"number": 22, "question": "Who is the author of The Sky Is the Limit?", "options": [{"letter": "A", "text": "Kalpana Chawla"}, {"letter": "B", "text": "Malala Yousafzai"}, {"letter": "C", "text": "Sudha Murty"}, {"letter": "D", "text": "Kiran Bedi"}], "answer": "A"}, {"number": 23, "question": "Who wrote The Road Not Taken?", "options": [{"letter": "A", "text": "William Wordsworth"}, {"letter": "B", "text": "Robert Frost"}, {"letter": "C", "text": "John Keats"}, {"letter": "D", "text": "Walt Whitman"}], "answer": "B"}, {"number": 24, "question": "Who wrote An Astrologer's Day?", "options": [{"letter": "A", "text": "R. K. Narayan"}, {"letter": "B", "text": "Mulk Raj Anand"}, {"letter": "C", "text": "Ruskin Bond"}, {"letter": "D", "text": "Khushwant Singh"}], "answer": "A"}, {"number": 25, "question": "Who wrote The Open Window?", "options": [{"letter": "A", "text": "O. Henry"}, {"letter": "B", "text": "Saki"}, {"letter": "C", "text": "Anton Chekhov"}, {"letter": "D", "text": "Guy de Maupassant"}], "answer": "B"}, {"number": 26, "question": "Who is the central character in English Vinglish?", "options": [{"letter": "A", "text": "Radha"}, {"letter": "B", "text": "Shashi"}, {"letter": "C", "text": "Meera"}, {"letter": "D", "text": "Lakshmi"}], "answer": "B"}, {"number": 27, "question": "What is the reading technique used to get the general idea of a text quickly?", "options": [{"letter": "A", "text": "Scanning"}, {"letter": "B", "text": "Skimming"}, {"letter": "C", "text": "Proofreading"}, {"letter": "D", "text": "Intensive reading"}], "answer": "B"}, {"number": 28, "question": "What is the reading technique used to locate particular information?", "options": [{"letter": "A", "text": "Skimming"}, {"letter": "B", "text": "Scanning"}, {"letter": "C", "text": "Extensive reading"}, {"letter": "D", "text": "Critical reading"}], "answer": "B"}, {"number": 29, "question": "What is the ability to express ideas clearly called?", "options": [{"letter": "A", "text": "Clarity"}, {"letter": "B", "text": "Fluency"}, {"letter": "C", "text": "Silence"}, {"letter": "D", "text": "Repetition"}], "answer": "A"}, {"number": 30, "question": "What is the act of paying careful attention to a speaker called?", "options": [{"letter": "A", "text": "Speaking"}, {"letter": "B", "text": "Listening"}, {"letter": "C", "text": "Reading"}, {"letter": "D", "text": "Writing"}], "answer": "B"}, {"number": 31, "question": "What is a formal discussion among a small group of people called?", "options": [{"letter": "A", "text": "Debate"}, {"letter": "B", "text": "Group discussion"}, {"letter": "C", "text": "Interview"}, {"letter": "D", "text": "Presentation"}], "answer": "B"}, {"number": 32, "question": "What is a person's belief in their own abilities called?", "options": [{"letter": "A", "text": "Confidence"}, {"letter": "B", "text": "Confusion"}, {"letter": "C", "text": "Hesitation"}, {"letter": "D", "text": "Dependence"}], "answer": "A"}, {"number": 33, "question": "What quality helps a person continue despite difficulties?", "options": [{"letter": "A", "text": "Negligence"}, {"letter": "B", "text": "Perseverance"}, {"letter": "C", "text": "Impatience"}, {"letter": "D", "text": "Indifference"}], "answer": "B"}, {"number": 34, "question": "What is the ability to recover from setbacks called?", "options": [{"letter": "A", "text": "Anxiety"}, {"letter": "B", "text": "Resilience"}, {"letter": "C", "text": "Pessimism"}, {"letter": "D", "text": "Carelessness"}], "answer": "B"}, {"number": 35, "question": "What is the short form of United Nations?", "options": [{"letter": "A", "text": "UN"}, {"letter": "B", "text": "UNESCO"}, {"letter": "C", "text": "UNICEF"}, {"letter": "D", "text": "WHO"}], "answer": "A"}, {"number": 36, "question": "What is the opposite of formal language?", "options": [{"letter": "A", "text": "Academic"}, {"letter": "B", "text": "Official"}, {"letter": "C", "text": "Informal"}, {"letter": "D", "text": "Technical"}], "answer": "C"}, {"number": 37, "question": "What punctuation mark usually ends a direct question?", "options": [{"letter": "A", "text": "Full stop"}, {"letter": "B", "text": "Comma"}, {"letter": "C", "text": "Question mark"}, {"letter": "D", "text": "Colon"}], "answer": "C"}, {"number": 38, "question": "What do we call the person who sends a letter?", "options": [{"letter": "A", "text": "Recipient"}, {"letter": "B", "text": "Sender"}, {"letter": "C", "text": "Editor"}, {"letter": "D", "text": "Witness"}], "answer": "B"}, {"number": 39, "question": "What do we call the person who receives a letter?", "options": [{"letter": "A", "text": "Sender"}, {"letter": "B", "text": "Author"}, {"letter": "C", "text": "Recipient"}, {"letter": "D", "text": "Publisher"}], "answer": "C"}, {"number": 40, "question": "What is the main idea of a text often called?", "options": [{"letter": "A", "text": "Theme"}, {"letter": "B", "text": "Caption"}, {"letter": "C", "text": "Footnote"}, {"letter": "D", "text": "Dialogue"}], "answer": "A"}];
+const quiz = document.getElementById('quiz');
+const result = document.getElementById('result');
+const answered = new Set();
+let score = 0;
+
+function renderQuiz(){
+  quiz.innerHTML = '';
+  questions.forEach((q, idx) => {
+    const card = document.createElement('section');
+    card.className = 'question';
+    const heading = document.createElement('h2');
+    const num = document.createElement('span');
+    num.className = 'qnum';
+    num.textContent = `Q${q.number}.`;
+    heading.append(num, document.createTextNode(' ' + q.question));
+    card.appendChild(heading);
+    q.options.forEach(opt => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'option';
+      btn.dataset.letter = opt.letter;
+      const letter = document.createElement('span');
+      letter.className = 'letter';
+      letter.textContent = opt.letter + '.';
+      const label = document.createElement('span');
+      label.textContent = opt.text;
+      btn.append(letter, label);
+      btn.addEventListener('click', () => chooseAnswer(q, card, btn));
+      card.appendChild(btn);
+    });
+    const feedback = document.createElement('p');
+    feedback.className = 'feedback';
+    feedback.setAttribute('aria-live','polite');
+    card.appendChild(feedback);
+    quiz.appendChild(card);
+  });
+  updateStats();
+}
+function chooseAnswer(q, card, selected){
+  if(answered.has(q.number)) return;
+  answered.add(q.number);
+  const isCorrect = selected.dataset.letter === q.answer;
+  if(isCorrect) score++;
+  card.querySelectorAll('.option').forEach(btn => {
+    btn.disabled = true;
+    if(btn.dataset.letter === q.answer) btn.classList.add('correct');
+  });
+  const feedback = card.querySelector('.feedback');
+  if(isCorrect){
+    feedback.textContent = 'Correct answer!';
+    feedback.classList.add('good');
+  }else{
+    selected.classList.add('wrong');
+    const correctOption = q.options.find(o => o.letter === q.answer);
+    feedback.textContent = `Incorrect. Correct answer: ${q.answer}. ${correctOption.text}`;
+    feedback.classList.add('bad');
+  }
+  updateStats();
+  if(answered.size === questions.length) showResult();
+}
+function updateStats(){
+  document.getElementById('progressText').textContent = `Answered ${answered.size} of ${questions.length}`;
+  document.getElementById('scoreText').textContent = `Score: ${score} / ${questions.length}`;
+  document.getElementById('progress').style.width = `${answered.size/questions.length*100}%`;
+}
+function showResult(){
+  result.style.display = 'block';
+  document.getElementById('finalScore').textContent = `${score} / ${questions.length}`;
+  const pct = Math.round(score/questions.length*100);
+  document.getElementById('finalMessage').textContent = `You scored ${pct}%. ${pct >= 80 ? 'Excellent work!' : pct >= 50 ? 'Good effort—review the questions you missed and try again.' : 'Keep practising. Reset the quiz and try again.'}`;
+  result.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function resetQuiz(){
+  score = 0;
+  answered.clear();
+  result.style.display = 'none';
+  renderQuiz();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+document.getElementById('resetBtn').addEventListener('click',resetQuiz);
+document.getElementById('playAgain').addEventListener('click',resetQuiz);
+renderQuiz();
+</script>
+</body>
+</html>
